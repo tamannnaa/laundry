@@ -40,7 +40,7 @@ const LaundryForm = mongoose.model('LaundryForm', laundryFormSchema);
 const LaundryPerson = mongoose.model('laundryperson', laundryschema);
 const User = mongoose.model('User', userSchema);
 
-app.get('/', (req, res) => res.render('home'));
+app.get('/', (req, res) => res.render('index'));
 app.get('/laundrylogin', (req, res) => res.render('loginadmin'));
 app.get("/delete", (req, res) => res.render("delete"));
 app.post("/delete", async (req, res) => {
@@ -50,6 +50,11 @@ app.post("/delete", async (req, res) => {
   await LaundryForm.deleteMany({ user_id: userId });
   req.session.destroy();
   res.render('login', { message: 'Account Deleted Successfully!' });
+});
+
+app.get('/index.html', (req, res) => {
+  const html = ejs.renderFile('views/index.ejs', {});
+  res.send(html);
 });
 
 app.post('/update-form-status', async (req, res) => {
